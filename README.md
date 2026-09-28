@@ -2,6 +2,8 @@
 
 > 本文档写给**要修改这个 skill 的人**。使用者只需读 `SKILL.md`；
 > 改动者请先读完本文再动手。
+>
+> 协议：[MIT](./LICENSE) — 欢迎 fork、改动、二次分发。
 
 ## 1. 这个 skill 解决什么问题
 
@@ -186,8 +188,11 @@ multicam-coverage/
 ## 9. 安装与卸载
 
 ```bash
-cp -r multicam-coverage ~/.claude/skills/     # 安装
-rm -rf ~/.claude/skills/multicam-coverage     # 卸载
+# 安装（macOS / Linux）
+git clone https://github.com/Hello-World-0X/multicam-coverage.git ~/.claude/skills/multicam-coverage
+
+# 卸载
+rm -rf ~/.claude/skills/multicam-coverage
 ```
 
 新会话生效。触发：正反打/多机位/机位图等关键词自动触发，或显式「用 multicam-coverage」。
