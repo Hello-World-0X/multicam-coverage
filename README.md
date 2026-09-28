@@ -50,9 +50,12 @@ multicam-coverage/
     │                                   锚点先行、修正协议、抽卡预算、模型适配
     ├── perspective-checklist.md     ← 质检：18 项自检 + 违例修正话术 + 根因速查
     ├── worked-example.md            ← 范例：咖啡馆对话戏全流程（含提示词成品）
-    └── research-notes.md            ← 证据基础：剪辑体系原始定义（Wikipedia/
+    ├── research-notes.md            ← 证据基础：剪辑体系原始定义（Wikipedia/
                                         Bordwell/Mascelli）+ 图像模型相机控制研究
                                         （arXiv 2023–2026）+ 实测 FOV 表
+    └── multiview-geometry.md        ← 多视角几何：投影方程、对极/三角化/重投影、
+                                        信息边界（可见区/未见区）、
+                                        本 skill 各设计的数学出处
 ```
 
 **加载关系**（Claude skill 的 progressive disclosure）：
@@ -63,6 +66,7 @@ multicam-coverage/
    - Step 2 → `camera-geometry.md` + `camera-plot-template.md`
    - Step 3–5 → `prompt-strategy.md`；Step 5 → `perspective-checklist.md`
    - 不确定输出长什么样 → `worked-example.md`
+   - 改管线/深究「为什么这样设计」→ `multiview-geometry.md`
 3. `README.md` 不参与运行
 
 ## 4. 核心方法论（改动前必须理解）
@@ -127,6 +131,14 @@ multicam-coverage/
 
 > ⭐ 越轴为何「怪」有实证解释：它损害**空间表征与物体位置记忆**（不影响
 > 叙事理解）——所以违例图说不出哪里怪但就是不对。自检 A 组因此第一优先。
+
+### 4.7 多视角几何（multiview-geometry.md）
+
+管线设计的数学底座：一张图 = 一次投影 `x = K[R|t]X`；多视角 = 共享场景 X、
+不同外参。视图间三层关系（对极几何 → 三角化 → 重投影）解释了为何「渲染
+路线」几何级准确；**信息边界**（输入图的可见区 / 新机位才露出的未见区）
+解释了为何无法纯流程化——未见区必须靠生成「编」，而那正是透视易崩处。
+该文件末尾有「本 skill 各设计的数学出处」对照表，改管线前先看它。
 
 ## 5. 怎么改（按常见需求）
 

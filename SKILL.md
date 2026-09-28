@@ -95,3 +95,4 @@ description: 从正反打（shot/reverse-shot）场景图批量生成多机位�
 | `references/perspective-checklist.md` | Step 5 | 18 项自检 + 违例修正话术 + 根因速查 |
 | `references/worked-example.md` | 不确定输出长什么样时 | 一场咖啡馆对话戏的全流程范例 |
 | `references/research-notes.md` | 改方法/向用户解释依据时 | 证据基础：剪辑体系原始定义 + 图像模型相机控制研究 |
+| `references/multiview-geometry.md` | 改管线/深究「为什么」时 | 多视角几何：投影方程、对极/三角化/重投影、信息边界、各设计的数学出处 |
