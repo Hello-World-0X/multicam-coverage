@@ -56,9 +56,12 @@ multicam-coverage/
     ├── multiview-geometry.md        ← 多视角几何：投影方程、对极/三角化/重投影、
                                         信息边界（可见区/未见区）、
                                         本 skill 各设计的数学出处
-    └── manual-constraints.md        ← 人工约束标注：点对/平面/线段/深度提示，
+    ├── manual-constraints.md        ← 人工约束标注：点对/平面/线段/深度提示，
                                         3 点解一平面，agent 预标+人工确认，
                                         constraints.yaml 格式与局限
+    └── geometric-pipeline.md        ← 路线 A 工具链：深度→反投影→渲染→补洞，
+                                        阶段数据契约、尺度锚、机位表当位姿源、
+                                        三陷阱（掠射角/融合重影/幻觉留痕）、MVP 分期
 ```
 
 **加载关系**（Claude skill 的 progressive disclosure）：
@@ -71,6 +74,7 @@ multicam-coverage/
    - 不确定输出长什么样 → `worked-example.md`
    - 改管线/深究「为什么这样设计」→ `multiview-geometry.md`
    - 弱纹理区深度不可信 / 要人工干预 → `manual-constraints.md`
+   - 升级到几何管线（路线 A）→ `geometric-pipeline.md`
 3. `README.md` 不参与运行
 
 ## 4. 核心方法论（改动前必须理解）
@@ -152,6 +156,15 @@ multicam-coverage/
 验收看重投影误差 <1–2px。局限：要求两图都可见（只在一图露出的面标了也
 没用，仍归 hole_mask）；反射/透明面别标。这是摄影测量 60 年标准作业
 （自动匹配 + 人工控制点 + 捆绑调整）接进生成管线。
+
+### 4.9 几何管线（geometric-pipeline.md）——路线 A 的工具链方案
+
+提示词路线（C）之外的升级路线：深度估计 → 反投影 → 新机位渲染 → **定向补洞**。
+透视由数学保证，生成模型只在 hole_mask 里发挥。两个技巧：**尺度锚**（拿人
+当尺子，把相对深度换算成机位表的米数）、**机位表当位姿源**（SfM 降级为
+校验工具）。三个陷阱：掠射角并入洞、双图融合按深度方差合并、幻觉区留
+provenance 痕迹。实现形态推荐「agent + API」（贴合现有链路、免 GPU）。
+与 skill 零缝对接：只换 Step 3–4 的执行器，机位表/QC 照用。
 
 ## 5. 怎么改（按常见需求）
 
