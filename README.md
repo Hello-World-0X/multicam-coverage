@@ -53,9 +53,12 @@ multicam-coverage/
     ├── research-notes.md            ← 证据基础：剪辑体系原始定义（Wikipedia/
                                         Bordwell/Mascelli）+ 图像模型相机控制研究
                                         （arXiv 2023–2026）+ 实测 FOV 表
-    └── multiview-geometry.md        ← 多视角几何：投影方程、对极/三角化/重投影、
+    ├── multiview-geometry.md        ← 多视角几何：投影方程、对极/三角化/重投影、
                                         信息边界（可见区/未见区）、
                                         本 skill 各设计的数学出处
+    └── manual-constraints.md        ← 人工约束标注：点对/平面/线段/深度提示，
+                                        3 点解一平面，agent 预标+人工确认，
+                                        constraints.yaml 格式与局限
 ```
 
 **加载关系**（Claude skill 的 progressive disclosure）：
@@ -67,6 +70,7 @@ multicam-coverage/
    - Step 3–5 → `prompt-strategy.md`；Step 5 → `perspective-checklist.md`
    - 不确定输出长什么样 → `worked-example.md`
    - 改管线/深究「为什么这样设计」→ `multiview-geometry.md`
+   - 弱纹理区深度不可信 / 要人工干预 → `manual-constraints.md`
 3. `README.md` 不参与运行
 
 ## 4. 核心方法论（改动前必须理解）
@@ -139,6 +143,15 @@ multicam-coverage/
 路线」几何级准确；**信息边界**（输入图的可见区 / 新机位才露出的未见区）
 解释了为何无法纯流程化——未见区必须靠生成「编」，而那正是透视易崩处。
 该文件末尾有「本 skill 各设计的数学出处」对照表，改管线前先看它。
+
+### 4.8 人工约束标注（manual-constraints.md）
+
+弱纹理区（白墙/桌面）深度猜不准时的干预入口：点对/线段/平面/深度提示。
+关键洞察：**弱纹理面多是平面，3 对对应点解一整面墙**（低维结构红利）。
+半自动分工：agent 预标对应点 → 人工确认 → 捆绑调整联合优化位姿与平面，
+验收看重投影误差 <1–2px。局限：要求两图都可见（只在一图露出的面标了也
+没用，仍归 hole_mask）；反射/透明面别标。这是摄影测量 60 年标准作业
+（自动匹配 + 人工控制点 + 捆绑调整）接进生成管线。
 
 ## 5. 怎么改（按常见需求）
 

@@ -25,6 +25,8 @@ description: 从正反打（shot/reverse-shot）场景图批量生成多机位�
 
 **每条结论写出依据**（看到什么→推出什么）。无法判定的项列入 `uncertain`
 **问用户，禁止瞎猜**——一个错的轴线会污染整批图。
+弱纹理区（白墙/桌面）深度不可信、或用户要更高几何精度时，
+给标注入口（`references/manual-constraints.md`）：3 对对应点解一整面墙。
 
 ⚠️ 若两张参考图本身就有一镜越轴（屏幕方向不互补），立即报告用户并让其
 指定以哪张为准，后续机位锁在那一侧。
@@ -96,3 +98,4 @@ description: 从正反打（shot/reverse-shot）场景图批量生成多机位�
 | `references/worked-example.md` | 不确定输出长什么样时 | 一场咖啡馆对话戏的全流程范例 |
 | `references/research-notes.md` | 改方法/向用户解释依据时 | 证据基础：剪辑体系原始定义 + 图像模型相机控制研究 |
 | `references/multiview-geometry.md` | 改管线/深究「为什么」时 | 多视角几何：投影方程、对极/三角化/重投影、信息边界、各设计的数学出处 |
+| `references/manual-constraints.md` | 弱纹理深度不可信 / 用户要更高精度时 | 人工约束标注：点对/平面/线段/深度提示，agent 预标+人工确认，约束进捆绑调整 |
