@@ -59,9 +59,12 @@ multicam-coverage/
     ├── manual-constraints.md        ← 人工约束标注：点对/平面/线段/深度提示，
                                         3 点解一平面，agent 预标+人工确认，
                                         constraints.yaml 格式与局限
-    └── geometric-pipeline.md        ← 路线 A 工具链：深度→反投影→渲染→补洞，
+    ├── geometric-pipeline.md        ← 路线 A 工具链：深度→反投影→渲染→补洞，
                                         阶段数据契约、尺度锚、机位表当位姿源、
                                         三陷阱（掠射角/融合重影/幻觉留痕）、MVP 分期
+    └── blender-workflow.md          ← 建模路线（天花板）：机位表→Blender 相机映射、
+                                        批渲脚本、EEVEE/Cycles、富化位置、
+                                        静帧为何必须直接渲（8 条）
 ```
 
 **加载关系**（Claude skill 的 progressive disclosure）：
@@ -75,6 +78,7 @@ multicam-coverage/
    - 改管线/深究「为什么这样设计」→ `multiview-geometry.md`
    - 弱纹理区深度不可信 / 要人工干预 → `manual-constraints.md`
    - 升级到几何管线（路线 A）→ `geometric-pipeline.md`
+   - 场景可建模 / 完全准确路线 → `blender-workflow.md`
 3. `README.md` 不参与运行
 
 ## 4. 核心方法论（改动前必须理解）
@@ -165,6 +169,15 @@ multicam-coverage/
 校验工具）。三个陷阱：掠射角并入洞、双图融合按深度方差合并、幻觉区留
 provenance 痕迹。实现形态推荐「agent + API」（贴合现有链路、免 GPU）。
 与 skill 零缝对接：只换 Step 3–4 的执行器，机位表/QC 照用。
+
+### 4.10 建模路线（blender-workflow.md）——完全准确的天花板
+
+场景可建模时的最优解：机位表参数式列**直接转录成 Blender 相机**（默认
+sensor 36mm=全画幅，焦距 1:1），批渲脚本 + `blender -b` 无头跑。
+光照一致/绝对尺度/轴线纪律/真值深度全部白送。富化只让模型管质感
+（depth/normal ControlNet），多模态模型做审片（18 项 QC 半自动）而非像素富化。
+铁律：**静帧直接渲，禁止从渲染视频截图**——位姿量化、运动模糊、编码损失、
+重渲粒度、provenance、通道输出等 8 条原因见该文件 §8。
 
 ## 5. 怎么改（按常见需求）
 

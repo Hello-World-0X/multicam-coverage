@@ -100,3 +100,4 @@ description: 从正反打（shot/reverse-shot）场景图批量生成多机位�
 | `references/multiview-geometry.md` | 改管线/深究「为什么」时 | 多视角几何：投影方程、对极/三角化/重投影、信息边界、各设计的数学出处 |
 | `references/manual-constraints.md` | 弱纹理深度不可信 / 用户要更高精度时 | 人工约束标注：点对/平面/线段/深度提示，agent 预标+人工确认，约束进捆绑调整 |
 | `references/geometric-pipeline.md` | 升级到路线 A（深度+渲染）/ 规划该工具链时 | 几何管线：阶段架构+数据契约、选型表、尺度锚、机位表当位姿源、三陷阱、MVP 分期 |
+| `references/blender-workflow.md` | 场景可建模 / 走完全准确路线时 | Blender 操作手册：机位表→相机映射、批渲脚本、富化位置、为何静帧不从视频截 |
